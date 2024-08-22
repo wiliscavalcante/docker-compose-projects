@@ -63,11 +63,26 @@ services:
       - zabbix-server
     environment:
       ZBX_HOSTNAME: "zabbix-server"
-      ZBX_SERVER_HOST: zabbix-server
+      ZBX_SERVER_HOST: zabbix-server  
       ZBX_SERVER_PORT: '10051'
-      ZBX_SERVER_ACTIVE: zabbix-server
+      ZBX_SERVER_ACTIVE: zabbix-server  
     networks:
       - zabbix-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app
+    ports:
+      - "3000:3000"
+    networks:
+      - zabbix-network
+    volumes:
+      - grafana-data:/var/lib/grafana
 
 volumes:
   postgresql-data:
@@ -75,8 +90,8 @@ volumes:
   zabbix-snmptraps-data:
   zabbix-export-data:
   zabbix-web-data:
+  grafana-data:
 
 networks:
   zabbix-network:
     driver: bridge
-
