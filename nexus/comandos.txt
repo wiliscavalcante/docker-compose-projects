@@ -3,3 +3,5 @@ openssl s_client -connect nexus.local:443 -servername nexus.local 2>/dev/null | 
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nexus.key -out nexus.crt -config openssl.cnf
 docker-compose down                                                                                                    
 docker-compose up -d --build
+
+export PYTHONHTTPSVERIFY=0
