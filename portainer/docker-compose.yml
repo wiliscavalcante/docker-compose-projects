@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:2.21.3-alpine
+    container_name: portainer
+    restart: always
+    ports:
+      - "9443:9443"  # Porta para acessar a interface web com HTTPS
+#      - "8000:8000"  # Porta para o agente de edge (opcional)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Permitir que o Portainer acesse o Docker Engine
+      - portainer_data:/data  # Persistência de dados
+
+volumes:
+  portainer_data:
